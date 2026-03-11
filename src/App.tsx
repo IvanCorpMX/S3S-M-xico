@@ -46,6 +46,7 @@ interface Solution {
   tags: string[];
   details: string;
   specs: string[];
+  image: string;
   catalog: {
     name: string;
     size: string;
@@ -67,6 +68,8 @@ const solutionsData: Solution[] = [
       "Supresores de Picos y Telemetría",
       "Puntas Pararrayos y Tierras Físicas"
     ],
+    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/calidad-energia.webp")
+    image: "https://picsum.photos/seed/energy/800/600",
     catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
   },
   {
@@ -82,6 +85,8 @@ const solutionsData: Solution[] = [
       "Mantenimiento preventivo y correctivo",
       "Protección para equipos críticos"
     ],
+    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/ups.webp")
+    image: "https://picsum.photos/seed/ups/800/600",
     catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
   },
   {
@@ -97,6 +102,8 @@ const solutionsData: Solution[] = [
       "Generadores Portátiles",
       "Mantenimiento, Soporte Técnico y Pruebas"
     ],
+    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/generadores.webp")
+    image: "https://picsum.photos/seed/generator/800/600",
     catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
   },
   {
@@ -112,21 +119,8 @@ const solutionsData: Solution[] = [
       "Asesoría en Incentivos y financiamiento",
       "Gestión de Trámites ante la CFE"
     ],
-    catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
-  },
-  {
-    id: "instalaciones-gas-lp",
-    icon: <Flame className="w-8 h-8" />,
-    title: "Instalaciones de Gas LP",
-    desc: "Fuente de energía versátil y altamente eficiente para la industria.",
-    tags: ["Diseño", "Mantenimiento", "Conversión"],
-    details: "El Gas LP es una fuente de energía versátil y altamente eficiente, lo que se traduce en un menor consumo y costos operativos reducidos. Su aplicación garantiza seguridad, eficiencia y cumplimiento con normativas vigentes.",
-    specs: [
-      "Diseño e Instalación de sistemas de aprovechamiento",
-      "Mantenimiento y verificaciones de seguridad",
-      "Conversión de equipos para uso eficiente",
-      "Aplicaciones industriales y comerciales"
-    ],
+    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/solar.webp")
+    image: "https://picsum.photos/seed/solar/800/600",
     catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
   }
 ];
@@ -254,12 +248,6 @@ const Hero = () => {
       image: "https://picsum.photos/seed/solar/800/600.webp",
       tag: "Energía Renovable",
       icon: <Sun className="w-6 h-6" />
-    },
-    {
-      title: "Instalaciones de Gas LP",
-      image: "https://picsum.photos/seed/gas/800/600.webp",
-      tag: "Eficiencia Industrial",
-      icon: <Flame className="w-6 h-6" />
     }
   ];
 
@@ -391,38 +379,62 @@ const ProblemSection = () => (
         <h2 className="text-orange-400 font-bold uppercase tracking-widest text-sm mb-4">El costo de la inacción</h2>
         <h3 className="text-4xl md:text-5xl font-black mb-6">¿Cuánto te cuesta un apagón?</h3>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          En la industria moderna, un segundo de interrupción eléctrica puede significar horas de recuperación y pérdidas millonarias.
+          No tener un sistema de respaldo es más caro que adquirir uno. Descubre el impacto real de las fallas eléctricas en las empresas mexicanas.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-8 mb-12">
         {[
           {
             icon: <TrendingDown className="w-10 h-10 text-orange-500" />,
-            title: "Pérdidas por Apagones",
-            desc: "Interrupción inmediata de líneas de producción y pérdida de materia prima."
+            title: "Impacto en la Manufactura",
+            desc: <>La industria manufacturera pierde hasta <strong>$200 millones de dólares</strong> por cada hora de apagón masivo.</>,
+            source: "Cluster Industrial",
+            link: "https://clusterindustrial.com.mx/manufactura-mexicana-pierde-200-mdd-por-hora-ante-apagones-y-tormentas/"
           },
           {
             icon: <AlertTriangle className="w-10 h-10 text-orange-500" />,
-            title: "Daño a Equipos",
-            desc: "Picos de voltaje que destruyen componentes electrónicos sensibles y motores."
+            title: "Rentabilidad y Ventas",
+            desc: <>Los problemas de suministro eléctrico provocan una caída de hasta el <strong>5% en las ventas anuales</strong> de las empresas en México.</>,
+            source: "Global Energy",
+            link: "https://globalenergy.mx/noticias/industria-mexicana-pierde-hasta-200mdd-por-hora-en-apagones/"
           },
           {
             icon: <Settings className="w-10 h-10 text-orange-500" />,
-            title: "Interrupción Operativa",
-            desc: "Caída de servidores, pérdida de datos y personal inactivo por falta de energía."
+            title: "Costo de Inactividad por Minuto",
+            desc: <>El costo promedio por minuto de tiempo de inactividad para una empresa es de aproximadamente <strong>$5,600 USD</strong>.</>,
+            source: "Energy & Commerce",
+            link: "https://energyandcommerce.com.mx/el-costo-oculto-de-los-apagones-industriales-en-mexico/"
           }
         ].map((item, i) => (
           <motion.div 
             key={i}
             whileHover={{ y: -10 }}
-            className="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm"
+            className="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm flex flex-col"
           >
             <div className="mb-6">{item.icon}</div>
             <h4 className="text-xl font-bold mb-4">{item.title}</h4>
-            <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+            <p className="text-gray-300 leading-relaxed mb-6 flex-grow">{item.desc}</p>
+            <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-gray-500 hover:text-brand-orange transition-colors mt-auto">
+              Fuente: {item.source}
+            </a>
           </motion.div>
         ))}
+      </div>
+
+      <div className="bg-brand-orange/10 border border-brand-orange/20 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+        <div className="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center shrink-0">
+          <MapPin className="w-8 h-8 text-brand-orange" />
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-white mb-2">Contexto Local: Impacto en el Sureste</h4>
+          <p className="text-gray-300 text-sm leading-relaxed mb-2">
+            Más de <strong>130,000 comercios</strong> reportaron pérdidas significativas por fallas eléctricas recientes en la región. La prevención es clave para la continuidad operativa.
+          </p>
+          <a href="https://oem.com.mx/elheraldodetabasco/local/cfe-dejo-perdidas-por-apagones-a-130-mil-comercios-durante-2024-en-tabasco-22234260" target="_blank" rel="noopener noreferrer" className="text-xs text-brand-orange hover:text-white transition-colors">
+            Fuente: El Heraldo de Tabasco
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -430,130 +442,101 @@ const ProblemSection = () => (
 
 const SolutionsSection = () => {
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % solutionsData.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + solutionsData.length) % solutionsData.length);
+  };
+
+  // Auto-play del carrusel cada 4 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
   
   return (
-    <section id="soluciones" className="py-24 bg-white">
+    <section id="soluciones" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Nuestras Soluciones</h2>
             <h3 className="section-title">Energía Segura y Respaldo Total</h3>
           </div>
+          <div className="flex gap-4">
+            <button 
+              onClick={prevSlide}
+              className="w-12 h-12 rounded-full border-2 border-brand-grey flex items-center justify-center hover:bg-brand-grey hover:text-white transition-colors"
+            >
+              <ArrowRight className="w-5 h-5 rotate-180" />
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="w-12 h-12 rounded-full border-2 border-brand-grey flex items-center justify-center hover:bg-brand-grey hover:text-white transition-colors"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-6">
-          {solutionsData.map((sol, i) => (
-            <motion.div 
-              key={i} 
-              whileHover={{ y: -5 }}
-              onClick={() => {
-                navigate(`/solucion/${sol.id}`);
-                window.scrollTo(0, 0);
-              }}
-              className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-col"
-            >
-              <div className="w-16 h-16 bg-industrial-light rounded-xl flex items-center justify-center mb-6 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
-                {sol.icon}
-              </div>
-              <h4 className="text-xl font-bold mb-3">{sol.title}</h4>
-              <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">{sol.desc}</p>
-              <div className="flex flex-wrap gap-2 mt-auto">
-                {sol.tags.map((tag, j) => (
-                  <span key={j} className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-gray-50 flex items-center text-xs font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
-                MÁS INFORMACIÓN <ArrowRight className="w-4 h-4 ml-2" />
-              </div>
-            </motion.div>
-          ))}
+        <div className="relative">
+          <div 
+            className="flex transition-transform duration-500 ease-in-out gap-6"
+            style={{ transform: `translateX(calc(-${currentIndex * 100}% - ${currentIndex * 24}px))` }}
+          >
+            {solutionsData.map((sol, i) => (
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -5 }}
+                onClick={() => {
+                  navigate(`/solucion/${sol.id}`);
+                  window.scrollTo(0, 0);
+                }}
+                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(50%-12px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-row items-center overflow-hidden p-0"
+              >
+                <div className="p-6 md:p-8 flex flex-col flex-grow w-3/5 md:w-2/3">
+                  <div className="w-12 h-12 bg-industrial-light rounded-xl flex items-center justify-center mb-4 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
+                    {sol.icon}
+                  </div>
+                  <h4 className="text-xl font-bold mb-3">{sol.title}</h4>
+                  <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">{sol.desc}</p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {sol.tags.map((tag, j) => (
+                      <span key={j} className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-gray-50 flex items-center text-xs font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
+                    MÁS INFORMACIÓN <ArrowRight className="w-4 h-4 ml-2" />
+                  </div>
+                </div>
+                <div className="w-2/5 md:w-1/3 p-4 pl-0 shrink-0 flex items-center justify-center">
+                  <div className="w-full aspect-square relative overflow-hidden rounded-xl">
+                    <img 
+                      src={sol.image} 
+                      alt={sol.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-const ImpactComparison = () => (
-  <section id="impacto" className="py-24 bg-industrial-light">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Análisis Financiero</h2>
-          <h3 className="section-title">El ROI de la Continuidad</h3>
-          <p className="text-gray-600 mb-8">
-            Invertir en respaldo no es un gasto, es un seguro operativo. Compara el impacto de un solo evento de falla eléctrica frente a una infraestructura protegida por S3S México.
-          </p>
-          
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-xl border-l-4 border-red-500 shadow-sm">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-bold text-red-600 uppercase text-xs tracking-widest">Escenario: Apagón sin Respaldo</span>
-                <span className="text-red-600 font-black">-$250,000 USD/hr</span>
-              </div>
-              <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: '100%' }}
-                  className="bg-red-500 h-full"
-                />
-              </div>
-              <p className="text-xs text-gray-500 mt-2 italic">*Estimado promedio en industria automotriz/médica.</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border-l-4 border-green-500 shadow-sm">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-bold text-green-600 uppercase text-xs tracking-widest">Escenario: Con Sistema S3S</span>
-                <span className="text-green-600 font-black">$0 USD Pérdida</span>
-              </div>
-              <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: '5%' }}
-                  className="bg-green-500 h-full"
-                />
-              </div>
-              <p className="text-xs text-gray-500 mt-2 italic">Continuidad operativa 99.99%.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-brand-grey p-10 rounded-3xl text-white relative overflow-hidden">
-          <div className="relative z-10">
-            <h4 className="text-2xl font-bold mb-6">Casos de Éxito Reales</h4>
-            <div className="space-y-8">
-              {[
-                {
-                  client: "Hospital Regional Norte",
-                  result: "Protección de 4 quirófanos con UPS de grado médico.",
-                  impact: "Cero incidentes en 3 años."
-                },
-                {
-                  client: "Planta Industrial Querétaro",
-                  result: "Instalación de planta de 1000kVA sincronizada.",
-                  impact: "Ahorro de $1.2M USD en mermas evitadas."
-                }
-              ].map((item, i) => (
-                <div key={i} className="border-b border-white/10 pb-6 last:border-0">
-                  <p className="text-orange-400 font-bold text-sm mb-1">{item.client}</p>
-                  <p className="font-medium mb-2">{item.result}</p>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
-                    <CheckCircle2 className="w-4 h-4 text-green-400" /> {item.impact}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 const SectorsSection = () => (
-  <section id="sectores" className="py-24 bg-white">
+  <section id="sectores" className="py-24 bg-industrial-light">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
         <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Especialización por Sector</h2>
@@ -754,91 +737,25 @@ const ContactCTA = () => {
                   <p className="font-bold">ventas@s3s-mx.com</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-brand-orange" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 uppercase font-bold">Ubicación</p>
-                  <p className="font-bold text-sm">Cto. Las Violetas 1-1, Colonia Pino Suárez, 86168 Villahermosa, Tab.</p>
-                </div>
-              </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-3xl p-8 text-brand-grey">
-            {isSubmitted ? (
-              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-12">
-                <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold text-industrial-dark">¡Mensaje Enviado!</h3>
-                <p className="text-gray-500">Nos pondremos en contacto contigo a la brevedad.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase text-gray-400">Nombre</label>
-                    <input 
-                      type="text" 
-                      value={formData.nombre}
-                      onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-                      className={`w-full bg-gray-50 border ${errors.nombre ? 'border-red-500' : 'border-gray-200'} rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-orange`} 
-                      placeholder="Tu nombre" 
-                    />
-                    {errors.nombre && <p className="text-red-500 text-xs mt-1">{errors.nombre}</p>}
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase text-gray-400">Empresa</label>
-                    <input 
-                      type="text" 
-                      value={formData.empresa}
-                      onChange={(e) => setFormData({...formData, empresa: e.target.value})}
-                      className={`w-full bg-gray-50 border ${errors.empresa ? 'border-red-500' : 'border-gray-200'} rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-orange`} 
-                      placeholder="Nombre de empresa" 
-                    />
-                    {errors.empresa && <p className="text-red-500 text-xs mt-1">{errors.empresa}</p>}
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-gray-400">Correo Corporativo</label>
-                  <input 
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className={`w-full bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-orange`} 
-                    placeholder="email@empresa.com" 
-                  />
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-gray-400">Servicio de interés</label>
-                  <select 
-                    value={formData.servicio}
-                    onChange={(e) => setFormData({...formData, servicio: e.target.value})}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-orange"
-                  >
-                    <option value="Calidad de Energía">Calidad de Energía</option>
-                    <option value="Respaldo de Energía (UPS)">Respaldo de Energía (UPS)</option>
-                    <option value="Generadores de Emergencia">Generadores de Emergencia</option>
-                    <option value="Sistemas Fotovoltaicos">Sistemas Fotovoltaicos</option>
-                    <option value="Instalaciones de Gas LP">Instalaciones de Gas LP</option>
-                  </select>
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-gray-400">Mensaje</label>
-                  <textarea 
-                    value={formData.mensaje}
-                    onChange={(e) => setFormData({...formData, mensaje: e.target.value})}
-                    className={`w-full bg-gray-50 border ${errors.mensaje ? 'border-red-500' : 'border-gray-200'} rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-orange h-24`} 
-                    placeholder="Cuéntanos sobre tu proyecto..."
-                  ></textarea>
-                  {errors.mensaje && <p className="text-red-500 text-xs mt-1">{errors.mensaje}</p>}
-                </div>
-                <button type="submit" className="btn-primary w-full mt-4">Enviar Solicitud de Cotización</button>
-              </form>
-            )}
+          <div className="bg-white rounded-3xl p-0 text-brand-grey h-[600px] overflow-hidden shadow-xl">
+            {/* 
+              Para cambiar el calendario de Microsoft Bookings en el futuro:
+              1. Ve a tu panel de Microsoft Bookings
+              2. Copia el enlace de tu página de reservas
+              3. Reemplaza la URL en el atributo 'src' del iframe de abajo
+            */}
+            <iframe 
+              src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={true} 
+              loading="lazy" 
+              title="Agendar Cita con S3S México"
+            ></iframe>
           </div>
         </div>
         
@@ -853,7 +770,7 @@ const ContactCTA = () => {
 const Footer = () => (
   <footer className="bg-brand-grey text-white py-20 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid md:grid-cols-4 gap-12 mb-16">
+      <div className="grid md:grid-cols-3 gap-12 mb-16">
         <div className="col-span-2">
           <Logo className="h-14 mb-6 brightness-0 invert" />
           <p className="text-gray-400 max-w-sm mb-8">
@@ -874,26 +791,10 @@ const Footer = () => (
             </a>
           </div>
         </div>
-        
-        <div>
-          <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Áreas de Servicio</h5>
-          <ul className="space-y-4 text-sm text-gray-400">
-            <li className="hover:text-white cursor-pointer transition-colors">Tabasco</li>
-            <li className="hover:text-white cursor-pointer transition-colors">Sur de Veracruz</li>
-            <li className="hover:text-white cursor-pointer transition-colors">Chiapas</li>
-            <li className="hover:text-white cursor-pointer transition-colors">Campeche</li>
-            <li className="hover:text-white cursor-pointer transition-colors">Mérida</li>
-            <li className="hover:text-white cursor-pointer transition-colors">Cancún</li>
-          </ul>
-        </div>
 
         <div>
           <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Contacto</h5>
           <ul className="space-y-4 text-sm text-gray-400">
-            <li className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>Cto. Las Violetas 1-1, Colonia Pino Suárez,<br />86168 Villahermosa, Tab.</span>
-            </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-brand-orange shrink-0" />
               <span>+52 993 980 0601</span>
@@ -1029,7 +930,7 @@ const AboutPage = () => (
         <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Nuestra Historia</h2>
         <h1 className="text-4xl md:text-6xl font-black text-industrial-dark mb-6">¿Quiénes Somos?</h1>
         <p className="text-xl text-gray-600 leading-relaxed mb-6">
-          Somos líderes en soluciones de respaldo energético y eficiencia industrial en México. Con más de 15 años de experiencia, garantizamos la continuidad de tu negocio con tecnología de vanguardia y un equipo de ingenieros altamente capacitados.
+          Somos líderes en soluciones de respaldo energético y eficiencia industrial en México. Con más de 4 años de experiencia, garantizamos la continuidad de tu negocio con tecnología de vanguardia y un equipo de ingenieros altamente capacitados.
         </p>
         <p className="text-lg text-gray-500 leading-relaxed">
           Nuestro compromiso es brindar seguridad y confianza a través de proyectos llave en mano, desde el diseño hasta la puesta en marcha y mantenimiento.
@@ -1043,7 +944,7 @@ const AboutPage = () => (
           referrerPolicy="no-referrer"
         />
         <div className="absolute -bottom-6 -left-6 bg-brand-orange p-6 rounded-2xl shadow-xl text-white">
-          <p className="text-3xl font-black mb-1">15+</p>
+          <p className="text-3xl font-black mb-1">4+</p>
           <p className="text-xs font-bold uppercase tracking-widest">Años de experiencia</p>
         </div>
       </div>
@@ -1075,66 +976,55 @@ const ContactPage = () => (
       </p>
     </div>
 
-    <div className="grid lg:grid-cols-2 gap-12">
-      <div className="space-y-8">
-        <div className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
-          <h3 className="text-2xl font-bold mb-6">Información de Contacto</h3>
-          <div className="space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
-                <Phone className="w-5 h-5 text-brand-orange" />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase font-bold">Llámanos</p>
-                <p className="font-bold text-lg">+52 993 980 0601</p>
-              </div>
+    <div className="max-w-3xl mx-auto space-y-8">
+      <div className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+        <h3 className="text-2xl font-bold mb-6">Información de Contacto</h3>
+        <div className="space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
+              <Phone className="w-5 h-5 text-brand-orange" />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
-                <Phone className="w-5 h-5 text-brand-orange" />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp</p>
-                <p className="font-bold text-lg">+52 55 2502 0234</p>
-              </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase font-bold">Llámanos</p>
+              <p className="font-bold text-lg">+52 993 980 0601</p>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
-                <Mail className="w-5 h-5 text-brand-orange" />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase font-bold">Email</p>
-                <p className="font-bold text-lg">ventas@s3s-mx.com</p>
-              </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
+              <Phone className="w-5 h-5 text-brand-orange" />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-brand-orange" />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase font-bold">Ubicación</p>
-                <p className="font-bold">Cto. Las Violetas 1-1, Colonia Pino Suárez,<br/>86168 Villahermosa, Tab.</p>
-              </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp</p>
+              <p className="font-bold text-lg">+52 55 2502 0234</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-industrial-light rounded-full flex items-center justify-center">
+              <Mail className="w-5 h-5 text-brand-orange" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 uppercase font-bold">Email</p>
+              <p className="font-bold text-lg">ventas@s3s-mx.com</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="bg-industrial-dark text-white p-8 rounded-3xl shadow-lg">
-          <h3 className="text-2xl font-bold mb-6">Nuestras Redes Sociales</h3>
-          <div className="flex gap-4">
-            <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
-              <Linkedin className="w-6 h-6" />
-            </a>
-            <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
-              <Facebook className="w-6 h-6" />
-            </a>
-            <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
-              <Instagram className="w-6 h-6" />
-            </a>
-            <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
-              <Music className="w-6 h-6" />
-            </a>
-          </div>
+      <div className="bg-industrial-dark text-white p-8 rounded-3xl shadow-lg">
+        <h3 className="text-2xl font-bold mb-6">Nuestras Redes Sociales</h3>
+        <div className="flex gap-4">
+          <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Linkedin className="w-6 h-6" />
+          </a>
+          <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Facebook className="w-6 h-6" />
+          </a>
+          <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Instagram className="w-6 h-6" />
+          </a>
+          <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+            <Music className="w-6 h-6" />
+          </a>
         </div>
       </div>
 
@@ -1167,7 +1057,6 @@ const LandingPage = () => (
     <Hero />
     <ProblemSection />
     <SolutionsSection />
-    <ImpactComparison />
     <SectorsSection />
     <ProcessSection />
     <Certifications />
