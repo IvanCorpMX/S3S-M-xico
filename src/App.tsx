@@ -69,8 +69,8 @@ const solutionsData: Solution[] = [
       "Puntas Pararrayos y Tierras Físicas"
     ],
     // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/calidad-energia.webp")
-    image: "https://picsum.photos/seed/energy/800/600",
-    catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
+    image: "/images/calidad-energia.webp",
+    catalog: { name: "brochure.pdf", size: "2.5 MB" }
   },
   {
     id: "respaldo-energia",
@@ -86,8 +86,8 @@ const solutionsData: Solution[] = [
       "Protección para equipos críticos"
     ],
     // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/ups.webp")
-    image: "https://picsum.photos/seed/ups/800/600",
-    catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
+    image: "/images/ups.webp",
+    catalog: { name: "brochure.pdf", size: "2.5 MB" }
   },
   {
     id: "generadores-emergencia",
@@ -103,8 +103,8 @@ const solutionsData: Solution[] = [
       "Mantenimiento, Soporte Técnico y Pruebas"
     ],
     // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/generadores.webp")
-    image: "https://picsum.photos/seed/generator/800/600",
-    catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
+    image: "/images/generadores.webp",
+    catalog: { name: "brochure.pdf", size: "2.5 MB" }
   },
   {
     id: "sistemas-fotovoltaicos",
@@ -120,8 +120,8 @@ const solutionsData: Solution[] = [
       "Gestión de Trámites ante la CFE"
     ],
     // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/solar.webp")
-    image: "https://picsum.photos/seed/solar/800/600",
-    catalog: { name: "Brochure_S3S.pdf", size: "2.5 MB" }
+    image: "/images/solar.webp",
+    catalog: { name: "brochure.pdf", size: "2.5 MB" }
   }
 ];
 
@@ -227,25 +227,25 @@ const Hero = () => {
   const slides = [
     {
       title: "Calidad de Energía",
-      image: "https://picsum.photos/seed/energia/800/600.webp",
+      image: "/images/hero-calidad.webp",
       tag: "Diagnóstico y Soluciones",
       icon: <Activity className="w-6 h-6" />
     },
     {
       title: "Respaldo de Energía (UPS)",
-      image: "https://picsum.photos/seed/ups/800/600.webp",
+      image: "/images/hero-ups.webp",
       tag: "Protección Continua",
       icon: <Battery className="w-6 h-6" />
     },
     {
       title: "Generadores de Emergencia",
-      image: "https://picsum.photos/seed/generador/800/600.webp",
+      image: "/images/hero-generadores.webp",
       tag: "Potencia de Respaldo",
       icon: <Zap className="w-6 h-6" />
     },
     {
       title: "Sistemas Fotovoltaicos",
-      image: "https://picsum.photos/seed/solar/800/600.webp",
+      image: "/images/hero-solar.webp",
       tag: "Energía Renovable",
       icon: <Sun className="w-6 h-6" />
     }
@@ -589,13 +589,13 @@ const ProcessSection = () => (
         </div>
         <div className="relative">
           <img 
-            src="https://picsum.photos/seed/engineer/600/800.webp" 
+            src="/images/proceso.webp" 
             alt="Engineering Process" 
             className="rounded-3xl shadow-2xl"
             referrerPolicy="no-referrer"
           />
           <div className="absolute -bottom-6 -right-6 bg-brand-orange p-8 rounded-2xl shadow-xl">
-            <p className="text-4xl font-black mb-1">15+</p>
+            <p className="text-4xl font-black mb-1">4+</p>
             <p className="text-xs font-bold uppercase tracking-widest">Años de experiencia</p>
           </div>
         </div>
@@ -606,19 +606,15 @@ const ProcessSection = () => (
 
 const Certifications = () => {
   const brands = [
-    { name: 'Schneider Electric', logo: '/logos/schneider.png' },
-    { name: 'Cummins', logo: '/logos/cummins.png' },
-    { name: 'APC', logo: '/logos/apc.png' },
-    { name: 'Tripp-Lite', logo: '/logos/tripplite.png' },
-    { name: 'Generac', logo: '/logos/generac.png' },
-    { name: 'Hyundai', logo: '/logos/hyundai.png' },
-    { name: 'Solis', logo: '/logos/solis.png' },
-    { name: 'Trinasolar', logo: '/logos/trinasolar.png' },
-    { name: 'K2 Systems', logo: '/logos/k2.png' },
-    { name: 'Novotegra', logo: '/logos/novotegra.png' },
     { name: 'DEHN', logo: '/logos/dehn.png' },
+    { name: 'Aurus', logo: '/logos/aurus.png' },
     { name: 'Total Ground', logo: '/logos/totalground.png' },
-    { name: 'Faragauss', logo: '/logos/faragauss.png' }
+    { name: 'Trinasolar', logo: '/logos/trinasolar.png' },
+    { name: 'Solis', logo: '/logos/solis.png' },
+    { name: 'Generac', logo: '/logos/generac.png' },
+    { name: 'Tripp-Lite', logo: '/logos/tripplite.png' },
+    { name: 'APC', logo: '/logos/apc.png' },
+    { name: 'Schneider Electric', logo: '/logos/schneider.png' }
   ];
 
   return (
@@ -895,7 +891,7 @@ const SolutionDetail = () => {
               </div>
             </div>
             <a 
-              href={`/catalogs/${solution.catalog.name}`} 
+              href={`/${solution.catalog.name}`} 
               target="_blank" 
               rel="noopener noreferrer"
               className="px-6 py-3 rounded-xl font-bold bg-white border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
@@ -938,7 +934,7 @@ const AboutPage = () => (
       </div>
       <div className="relative">
         <img 
-          src="https://picsum.photos/seed/engineer/800/600.webp" 
+          src="/images/nosotros.webp" 
           alt="Equipo S3S México" 
           className="rounded-3xl shadow-2xl object-cover w-full h-[400px]"
           referrerPolicy="no-referrer"
