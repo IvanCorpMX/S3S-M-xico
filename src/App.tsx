@@ -1044,7 +1044,7 @@ const ContactPage = () => (
         </div>
       </div>
 
-      <div className="h-full min-h-[400px] rounded-3xl overflow-hidden shadow-lg border border-gray-100 relative group">
+      <div className="h-[400px] md:h-[500px] w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 relative group">
         <iframe 
           src="https://maps.google.com/maps?q=S3S%20Mexico,%20Cto.%20Las%20Violetas%201-1,%20Pino%20Su%C3%A1rez,%2086168%20Villahermosa,%20Tab.&t=&z=15&ie=UTF8&iwloc=&output=embed" 
           width="100%" 
