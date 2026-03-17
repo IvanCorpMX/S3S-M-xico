@@ -809,8 +809,8 @@ const Footer = () => (
 
         <div>
           <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Certificaciones</h5>
-          <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-3 overflow-hidden">
+          <div className="bg-white p-4 rounded-xl border border-gray-200 flex flex-col items-center text-center shadow-sm">
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 overflow-hidden">
               <img 
                 src="/logos/iso27001.png" 
                 alt="ISO 27001" 
@@ -822,8 +822,8 @@ const Footer = () => (
               />
               <Globe className="w-8 h-8 text-brand-orange hidden" />
             </div>
-            <p className="text-sm font-bold text-white mb-1">ISO 27001</p>
-            <p className="text-xs text-gray-400">Seguridad de la Información</p>
+            <p className="text-sm font-bold text-brand-grey mb-1">ISO 27001</p>
+            <p className="text-xs text-gray-500">Seguridad de la Información</p>
           </div>
         </div>
       </div>
