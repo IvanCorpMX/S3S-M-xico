@@ -33,7 +33,8 @@ import {
   Linkedin,
   Music,
   ArrowLeft,
-  Flame
+  Flame,
+  Globe
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -766,7 +767,7 @@ const ContactCTA = () => {
 const Footer = () => (
   <footer className="bg-brand-grey text-white py-20 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid md:grid-cols-3 gap-12 mb-16">
+      <div className="grid md:grid-cols-4 gap-12 mb-16">
         <div className="col-span-2">
           <Logo className="h-14 mb-6 brightness-0 invert" />
           <p className="text-gray-400 max-w-sm mb-8">
@@ -805,13 +806,32 @@ const Footer = () => (
             </li>
           </ul>
         </div>
+
+        <div>
+          <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Certificaciones</h5>
+          <div className="bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-3 overflow-hidden">
+              <img 
+                src="/logos/iso27001.png" 
+                alt="ISO 27001" 
+                className="w-full h-full object-contain p-2"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
+                }}
+              />
+              <Globe className="w-8 h-8 text-brand-orange hidden" />
+            </div>
+            <p className="text-sm font-bold text-white mb-1">ISO 27001</p>
+            <p className="text-xs text-gray-400">Seguridad de la Información</p>
+          </div>
+        </div>
       </div>
       
       <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
         <p>© 2026 S3S México. Todos los derechos reservados.</p>
         <div className="flex gap-6">
-          <span className="hover:text-white cursor-pointer">Aviso de Privacidad</span>
-          <span className="hover:text-white cursor-pointer">Términos y Condiciones</span>
+          <Link to="/privacidad" className="hover:text-white transition-colors">Aviso de Privacidad</Link>
         </div>
       </div>
     </div>
@@ -1074,6 +1094,62 @@ const FloatingWhatsApp = () => (
   </a>
 );
 
+const PrivacyPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="pt-32 pb-24 bg-white min-h-screen">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl font-bold text-brand-black mb-8">Aviso de Privacidad</h1>
+        <div className="prose prose-lg text-gray-600 space-y-6">
+          <p className="font-medium">Última actualización: 10/03/2026</p>
+          <p>S3S México, empresa dedicada a soluciones de energía, paneles solares, UPS, generadores y servicios eléctricos es responsable del tratamiento de sus datos personales.</p>
+          
+          <h2 className="text-2xl font-bold text-brand-black mt-10 mb-4">Datos recabados</h2>
+          <p>Podemos recabar:</p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Nombre</li>
+            <li>Empresa</li>
+            <li>Teléfono</li>
+            <li>Correo electrónico</li>
+            <li>Dirección del inmueble o instalación</li>
+            <li>Información técnica para dimensionamiento de sistemas eléctricos o solares</li>
+          </ul>
+
+          <h2 className="text-2xl font-bold text-brand-black mt-10 mb-4">Finalidades</h2>
+          
+          <h3 className="text-xl font-semibold text-brand-black mt-6 mb-3">Primarias</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Evaluación de proyectos energéticos</li>
+            <li>Elaboración de propuestas y cotizaciones</li>
+            <li>Instalación, mantenimiento o soporte técnico</li>
+            <li>Atención a clientes</li>
+          </ul>
+
+          <h3 className="text-xl font-semibold text-brand-black mt-6 mb-3">Secundarias</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Envío de contenido informativo o promocional sobre soluciones energéticas</li>
+          </ul>
+
+          <h2 className="text-2xl font-bold text-brand-black mt-10 mb-4">Transferencias</h2>
+          <p>Sus datos podrán compartirse con empresas del grupo CORP-MX para fines relacionados con los servicios solicitados.</p>
+
+          <h2 className="text-2xl font-bold text-brand-black mt-10 mb-4">Derechos ARCO</h2>
+          <p>Para ejercerlos envíe un correo a:</p>
+          <p className="font-medium text-brand-orange">
+            <a href="mailto:ventas@s3s-mx.com" className="hover:underline">ventas@s3s-mx.com</a>
+          </p>
+
+          <h2 className="text-2xl font-bold text-brand-black mt-10 mb-4">Cambios</h2>
+          <p>Las actualizaciones a este aviso serán publicadas en el sitio web.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -1085,6 +1161,7 @@ export default function App() {
             <Route path="/solucion/:id" element={<SolutionDetail />} />
             <Route path="/nosotros" element={<AboutPage />} />
             <Route path="/contacto" element={<ContactPage />} />
+            <Route path="/privacidad" element={<PrivacyPage />} />
           </Routes>
         </main>
         <Footer />
