@@ -810,17 +810,17 @@ const Footer = () => (
         <div>
           <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Certificaciones</h5>
           <div className="bg-white p-4 rounded-xl border border-gray-200 flex flex-col items-center text-center shadow-sm">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 overflow-hidden">
+            <div className="w-full h-24 flex items-center justify-center mb-3">
               <img 
                 src="/logos/iso27001.png" 
                 alt="ISO 27001" 
-                className="w-full h-full object-contain p-2"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
                 }}
               />
-              <Globe className="w-8 h-8 text-brand-orange hidden" />
+              <Globe className="w-12 h-12 text-brand-orange hidden" />
             </div>
             <p className="text-sm font-bold text-brand-grey mb-1">ISO 27001</p>
             <p className="text-xs text-gray-500">Seguridad de la Información</p>
