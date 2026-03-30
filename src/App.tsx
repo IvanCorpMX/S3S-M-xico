@@ -155,7 +155,6 @@ const Logo = ({ className = "h-10" }: { className?: string }) => (
       <span className="text-xl font-black tracking-tighter text-brand-grey">
         S3S <span className="text-brand-orange">MÉXICO</span>
       </span>
-      <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-gray-400">Energía Segura</span>
     </div>
   </div>
 );
@@ -564,6 +563,33 @@ const SectorsSection = () => (
   </section>
 );
 
+const IsoCertificationSection = () => (
+  <section className="py-16 bg-white border-y border-gray-100">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16">
+        <div className="w-64 md:w-80 shrink-0">
+          <img 
+            src="/logos/iso27001.png" 
+            alt="ISO 27001" 
+            className="w-full h-auto object-contain"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
+            }}
+          />
+          <Globe className="w-20 h-20 text-brand-orange hidden mx-auto" />
+        </div>
+        <div className="text-center md:text-left">
+          <h3 className="text-3xl font-bold text-industrial-dark mb-4">Certificación ISO 27001</h3>
+          <p className="text-gray-600 max-w-2xl text-lg">
+            Estamos certificados en ISO 27001, garantizando los más altos estándares en la gestión de la seguridad de la información para proteger los datos y la operación de nuestros clientes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const ProcessSection = () => (
   <section id="proceso" className="py-24 bg-brand-grey text-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -722,7 +748,7 @@ const ContactCTA = () => {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp</p>
-                  <p className="font-bold">+52 55 2502 0234</p>
+                  <p className="font-bold">+52 1 55 7877 7227</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -767,7 +793,7 @@ const ContactCTA = () => {
 const Footer = () => (
   <footer className="bg-brand-grey text-white py-20 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid md:grid-cols-4 gap-12 mb-16">
+      <div className="grid md:grid-cols-3 gap-12 mb-16">
         <div className="col-span-2">
           <Logo className="h-14 mb-6 brightness-0 invert" />
           <p className="text-gray-400 max-w-sm mb-8">
@@ -798,33 +824,13 @@ const Footer = () => (
             </li>
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>+52 55 2502 0234 (WhatsApp)</span>
+              <span>+52 1 55 7877 7227 (WhatsApp)</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="w-4 h-4 text-brand-orange shrink-0" />
               <span>ventas@s3s-mx.com</span>
             </li>
           </ul>
-        </div>
-
-        <div>
-          <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Certificaciones</h5>
-          <div className="bg-white p-4 rounded-xl border border-gray-200 flex flex-col items-center text-center shadow-sm">
-            <div className="w-full h-24 flex items-center justify-center mb-3">
-              <img 
-                src="/logos/iso27001.png" 
-                alt="ISO 27001" 
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                  (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
-                }}
-              />
-              <Globe className="w-12 h-12 text-brand-orange hidden" />
-            </div>
-            <p className="text-sm font-bold text-brand-grey mb-1">ISO 27001</p>
-            <p className="text-xs text-gray-500">Seguridad de la Información</p>
-          </div>
         </div>
       </div>
       
@@ -1011,7 +1017,7 @@ const ContactPage = () => (
             </div>
             <div>
               <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp</p>
-              <p className="font-bold text-lg">+52 55 2502 0234</p>
+              <p className="font-bold text-lg">+52 1 55 7877 7227</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -1074,6 +1080,7 @@ const LandingPage = () => (
     <ProblemSection />
     <SolutionsSection />
     <SectorsSection />
+    <IsoCertificationSection />
     <ProcessSection />
     <Certifications />
     <ContactCTA />
@@ -1082,7 +1089,7 @@ const LandingPage = () => (
 
 const FloatingWhatsApp = () => (
   <a 
-    href="https://wa.me/525525020234" 
+    href="https://wa.me/5215578777227" 
     target="_blank" 
     rel="noopener noreferrer"
     className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center"
