@@ -763,7 +763,7 @@ const ContactCTA = () => {
             </div>
           </div>
           
-          <div className="bg-white rounded-3xl p-0 text-brand-grey h-[600px] overflow-hidden shadow-xl">
+          <div className="bg-white rounded-3xl p-4 md:p-6 text-brand-grey h-[700px] lg:h-[800px] flex items-center justify-center overflow-hidden shadow-xl">
             {/* 
               Para cambiar el calendario de Microsoft Bookings en el futuro:
               1. Ve a tu panel de Microsoft Bookings
@@ -772,8 +772,7 @@ const ContactCTA = () => {
             */}
             <iframe 
               src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
-              width="100%" 
-              height="100%" 
+              className="w-full h-full"
               style={{ border: 0 }} 
               allowFullScreen={true} 
               loading="lazy" 
