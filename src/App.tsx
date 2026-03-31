@@ -513,9 +513,9 @@ const SolutionsSection = () => {
                   navigate(`/solucion/${sol.id}`);
                   window.scrollTo(0, 0);
                 }}
-                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-col overflow-hidden p-0"
+                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(25%-18px)] xl:min-w-[calc(20%-19.2px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-col overflow-hidden p-0"
               >
-                <div className="w-full h-48 relative overflow-hidden shrink-0">
+                <div className="w-full aspect-square relative overflow-hidden shrink-0 bg-gray-50">
                   <img 
                     src={sol.image} 
                     alt={sol.title} 
@@ -523,21 +523,21 @@ const SolutionsSection = () => {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <div className="p-6 md:p-8 flex flex-col flex-grow w-full">
-                  <div className="w-12 h-12 bg-industrial-light rounded-xl flex items-center justify-center mb-4 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
+                <div className="p-5 md:p-6 flex flex-col flex-grow w-full">
+                  <div className="w-10 h-10 bg-industrial-light rounded-xl flex items-center justify-center mb-3 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
                     {sol.icon}
                   </div>
-                  <h4 className="text-xl font-bold mb-3">{sol.title}</h4>
-                  <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">{sol.desc}</p>
-                  <div className="flex flex-wrap gap-2 mt-auto">
+                  <h4 className="text-lg font-bold mb-2">{sol.title}</h4>
+                  <p className="text-gray-600 text-xs mb-4 leading-relaxed flex-grow">{sol.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
                     {sol.tags.map((tag, j) => (
-                      <span key={j} className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded">
+                      <span key={j} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <div className="mt-6 pt-4 border-t border-gray-50 flex items-center text-xs font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
-                    MÁS INFORMACIÓN <ArrowRight className="w-4 h-4 ml-2" />
+                  <div className="mt-4 pt-3 border-t border-gray-50 flex items-center text-[11px] font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
+                    MÁS INFORMACIÓN <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                   </div>
                 </div>
               </motion.div>
