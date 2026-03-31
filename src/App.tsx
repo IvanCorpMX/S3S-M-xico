@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Zap, 
   ShieldCheck, 
@@ -458,20 +458,34 @@ const ProblemSection = () => (
 
 const SolutionsSection = () => {
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % solutionsData.length);
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.clientWidth;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + solutionsData.length) % solutionsData.length);
+    if (scrollContainerRef.current) {
+      const scrollAmount = scrollContainerRef.current.clientWidth;
+      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    }
   };
 
   // Auto-play del carrusel cada 4 segundos
   useEffect(() => {
     const timer = setInterval(() => {
-      nextSlide();
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        // Si llegamos al final, volvemos al inicio
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollContainerRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+        }
+      }
     }, 4000);
     return () => clearInterval(timer);
   }, []);
@@ -493,17 +507,18 @@ const SolutionsSection = () => {
             </button>
             <button 
               onClick={nextSlide}
-              className="w-12 h-12 rounded-full border-2 border-brand-grey flex items-center justify-center hover:bg-brand-grey hover:text-white transition-colors"
+              className="w-12 h-12 rounded-full border-2 border-brand-orange flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-white transition-colors"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative -mx-4 sm:mx-0">
           <div 
-            className="flex transition-transform duration-500 ease-in-out gap-6"
-            style={{ transform: `translateX(calc(-${currentIndex * 100}% - ${currentIndex * 24}px))` }}
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 px-4 sm:px-0 hide-scrollbar"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {solutionsData.map((sol, i) => (
               <motion.div 
@@ -513,9 +528,9 @@ const SolutionsSection = () => {
                   navigate(`/solucion/${sol.id}`);
                   window.scrollTo(0, 0);
                 }}
-                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(25%-18px)] xl:min-w-[calc(20%-19.2px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-col overflow-hidden p-0"
+                className="w-[85vw] sm:w-full md:w-[calc(50%-12px)] min-w-[85vw] sm:min-w-full md:min-w-[calc(50%-12px)] snap-start shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-row overflow-hidden p-0 h-48 md:h-56"
               >
-                <div className="w-full aspect-square relative overflow-hidden shrink-0 bg-gray-50">
+                <div className="h-full aspect-square relative overflow-hidden shrink-0 bg-gray-50">
                   <img 
                     src={sol.image} 
                     alt={sol.title} 
@@ -523,21 +538,25 @@ const SolutionsSection = () => {
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <div className="p-5 md:p-6 flex flex-col flex-grow w-full">
-                  <div className="w-10 h-10 bg-industrial-light rounded-xl flex items-center justify-center mb-3 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
-                    {sol.icon}
+                <div className="p-5 md:p-6 flex flex-col flex-grow justify-between min-w-0">
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-industrial-light rounded-lg flex items-center justify-center text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all shrink-0 [&>svg]:w-5 [&>svg]:h-5">
+                        {sol.icon}
+                      </div>
+                      <h4 className="text-base md:text-lg font-bold line-clamp-2 leading-tight">{sol.title}</h4>
+                    </div>
+                    <p className="text-gray-600 text-xs md:text-sm line-clamp-3 md:line-clamp-4 leading-relaxed">{sol.desc}</p>
                   </div>
-                  <h4 className="text-lg font-bold mb-2">{sol.title}</h4>
-                  <p className="text-gray-600 text-xs mb-4 leading-relaxed flex-grow">{sol.desc}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-auto">
-                    {sol.tags.map((tag, j) => (
-                      <span key={j} className="text-[9px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-gray-50 flex items-center text-[11px] font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
-                    MÁS INFORMACIÓN <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex flex-wrap gap-1.5 overflow-hidden max-h-[26px]">
+                      {sol.tags.map((tag, j) => (
+                        <span key={j} className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider bg-gray-100 px-2 py-1 rounded whitespace-nowrap">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-3" />
                   </div>
                 </div>
               </motion.div>
