@@ -123,6 +123,22 @@ const solutionsData: Solution[] = [
     // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/solar.webp")
     image: "/images/solar.webp",
     catalog: { name: "brochure.pdf", size: "2.5 MB" }
+  },
+  {
+    id: "proteccion",
+    icon: <ShieldCheck className="w-8 h-8" />,
+    title: "Protección",
+    desc: "Sistemas de tierra física y sistemas de pararrayos.",
+    tags: ["Tierra Física", "Pararrayos", "Seguridad"],
+    details: "Protegemos tus instalaciones y equipos contra descargas atmosféricas y variaciones de voltaje mediante sistemas de tierra física y pararrayos de alta eficiencia.",
+    specs: [
+      "Sistemas de Tierra Física",
+      "Sistemas de Pararrayos",
+      "Estudios de Resistividad",
+      "Mantenimiento preventivo"
+    ],
+    image: "/images/proteccion.webp",
+    catalog: { name: "brochure.pdf", size: "2.5 MB" }
   }
 ];
 
@@ -497,9 +513,17 @@ const SolutionsSection = () => {
                   navigate(`/solucion/${sol.id}`);
                   window.scrollTo(0, 0);
                 }}
-                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(50%-12px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-row items-center overflow-hidden p-0"
+                className="w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] shrink-0 card-industrial group cursor-pointer hover:border-brand-orange transition-all flex flex-col overflow-hidden p-0"
               >
-                <div className="p-6 md:p-8 flex flex-col flex-grow w-3/5 md:w-2/3">
+                <div className="w-full h-48 relative overflow-hidden shrink-0">
+                  <img 
+                    src={sol.image} 
+                    alt={sol.title} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="p-6 md:p-8 flex flex-col flex-grow w-full">
                   <div className="w-12 h-12 bg-industrial-light rounded-xl flex items-center justify-center mb-4 text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all">
                     {sol.icon}
                   </div>
@@ -514,16 +538,6 @@ const SolutionsSection = () => {
                   </div>
                   <div className="mt-6 pt-4 border-t border-gray-50 flex items-center text-xs font-bold text-brand-orange opacity-0 group-hover:opacity-100 transition-opacity">
                     MÁS INFORMACIÓN <ArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </div>
-                <div className="w-2/5 md:w-1/3 p-4 pl-0 shrink-0 flex items-center justify-center">
-                  <div className="w-full aspect-square relative overflow-hidden rounded-xl">
-                    <img 
-                      src={sol.image} 
-                      alt={sol.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      referrerPolicy="no-referrer"
-                    />
                   </div>
                 </div>
               </motion.div>
@@ -622,7 +636,7 @@ const ProcessSection = () => (
             referrerPolicy="no-referrer"
           />
           <div className="absolute -bottom-6 -right-6 bg-brand-orange p-8 rounded-2xl shadow-xl">
-            <p className="text-4xl font-black mb-1">4+</p>
+            <p className="text-4xl font-black mb-1">12+</p>
             <p className="text-xs font-bold uppercase tracking-widest">Años de experiencia</p>
           </div>
         </div>
@@ -632,42 +646,69 @@ const ProcessSection = () => (
 );
 
 const Certifications = () => {
-  const brands = [
+  const marcas = [
     { name: 'DEHN', logo: '/logos/dehn.png' },
     { name: 'Aurus', logo: '/logos/aurus.png' },
-    { name: 'Total Ground', logo: '/logos/totalground.png' },
     { name: 'Trinasolar', logo: '/logos/trinasolar.png' },
-    { name: 'Solis', logo: '/logos/solis.png' },
     { name: 'Generac', logo: '/logos/generac.png' },
-    { name: 'Tripp-Lite', logo: '/logos/tripplite.png' },
     { name: 'APC', logo: '/logos/apc.png' },
     { name: 'Schneider Electric', logo: '/logos/schneider.png' }
+  ];
+
+  const certificados = [
+    { name: 'Kenjitsu', logo: '/logos/kenjitsu.png' },
+    { name: 'Solis', logo: '/logos/solis.png' },
+    { name: 'Total Ground', logo: '/logos/totalground.png' },
+    { name: 'Cyberpower', logo: '/logos/cyberpower.png' }
   ];
 
   return (
     <section className="py-16 bg-white border-y border-gray-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-[0.3em]">Certificaciones y Alianzas</p>
-      </div>
-      <div className="relative flex overflow-x-hidden">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-16 py-4">
-          {[...brands, ...brands].map((brand, i) => (
-            <div key={i} className="flex-shrink-0 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-              <img 
-                src={brand.logo} 
-                alt={brand.name} 
-                className="h-12 w-auto object-contain" 
-                onLoad={(e) => {
-                  (e.target as HTMLImageElement).nextElementSibling!.classList.add('hidden');
-                }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                  (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
-                }}
-              />
-              <span className="text-2xl font-black text-brand-grey italic px-4 hidden">{brand.name}</span>
-            </div>
-          ))}
+        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-12">Marcas que comercializamos</p>
+        <div className="relative flex overflow-x-hidden mb-16">
+          <div className="animate-marquee whitespace-nowrap flex items-center gap-16 py-4">
+            {[...marcas, ...marcas, ...marcas].map((brand, i) => (
+              <div key={i} className="flex-shrink-0 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className="h-12 w-auto object-contain" 
+                  onLoad={(e) => {
+                    (e.target as HTMLImageElement).nextElementSibling!.classList.add('hidden');
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
+                  }}
+                />
+                <span className="text-2xl font-black text-brand-grey italic px-4 hidden">{brand.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-[0.3em] mb-12">Certificados</p>
+        <div className="relative flex overflow-x-hidden">
+          <div className="animate-marquee whitespace-nowrap flex items-center gap-16 py-4" style={{ animationDirection: 'reverse' }}>
+            {[...certificados, ...certificados, ...certificados].map((brand, i) => (
+              <div key={i} className="flex-shrink-0 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className="h-12 w-auto object-contain" 
+                  onLoad={(e) => {
+                    (e.target as HTMLImageElement).nextElementSibling!.classList.add('hidden');
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
+                  }}
+                />
+                <span className="text-2xl font-black text-brand-grey italic px-4 hidden">{brand.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -951,7 +992,7 @@ const AboutPage = () => (
         <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Nuestra Historia</h2>
         <h1 className="text-4xl md:text-6xl font-black text-industrial-dark mb-6">¿Quiénes Somos?</h1>
         <p className="text-xl text-gray-600 leading-relaxed mb-6">
-          Somos líderes en soluciones de respaldo energético y eficiencia industrial en México. Con más de 4 años de experiencia, garantizamos la continuidad de tu negocio con tecnología de vanguardia y un equipo de ingenieros altamente capacitados.
+          Somos líderes en soluciones de respaldo energético y eficiencia industrial en México. Con más de 12 años de experiencia, garantizamos la continuidad de tu negocio con tecnología de vanguardia y un equipo de ingenieros altamente capacitados.
         </p>
         <p className="text-lg text-gray-500 leading-relaxed">
           Nuestro compromiso es brindar seguridad y confianza a través de proyectos llave en mano, desde el diseño hasta la puesta en marcha y mantenimiento.
@@ -965,7 +1006,7 @@ const AboutPage = () => (
           referrerPolicy="no-referrer"
         />
         <div className="absolute -bottom-6 -left-6 bg-brand-orange p-6 rounded-2xl shadow-xl text-white">
-          <p className="text-3xl font-black mb-1">4+</p>
+          <p className="text-3xl font-black mb-1">12+</p>
           <p className="text-xs font-bold uppercase tracking-widest">Años de experiencia</p>
         </div>
       </div>
