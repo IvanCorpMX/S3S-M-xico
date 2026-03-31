@@ -850,33 +850,33 @@ const ContactCTA = () => {
 };
 
 const Footer = () => (
-  <footer className="bg-brand-grey text-white py-20 border-t border-white/5">
+  <footer className="bg-brand-grey text-white py-10 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid md:grid-cols-3 gap-12 mb-16">
+      <div className="grid md:grid-cols-3 gap-8 mb-8">
         <div className="col-span-2">
-          <Logo className="h-14 mb-6 brightness-0 invert" />
-          <p className="text-gray-400 max-w-sm mb-8">
+          <Logo className="h-10 mb-4 brightness-0 invert" />
+          <p className="text-gray-400 max-w-sm mb-6 text-sm">
             Líderes en soluciones de respaldo energético y eficiencia industrial en México. Garantizamos la continuidad de tu negocio con tecnología de vanguardia.
           </p>
           <div className="flex gap-4">
-            <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
-              <Linkedin className="w-5 h-5" />
+            <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+              <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
-              <Facebook className="w-5 h-5" />
+            <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+              <Facebook className="w-4 h-4" />
             </a>
-            <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
-              <Instagram className="w-5 h-5" />
+            <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+              <Instagram className="w-4 h-4" />
             </a>
-            <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
-              <Music className="w-5 h-5" />
+            <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+              <Music className="w-4 h-4" />
             </a>
           </div>
         </div>
 
         <div>
-          <h5 className="font-bold uppercase tracking-widest text-xs mb-6 text-orange-400">Contacto</h5>
-          <ul className="space-y-4 text-sm text-gray-400">
+          <h5 className="font-bold uppercase tracking-widest text-xs mb-4 text-orange-400">Contacto</h5>
+          <ul className="space-y-2 text-sm text-gray-400">
             <li className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-brand-orange shrink-0" />
               <span>+52 993 980 0601</span>
@@ -893,7 +893,7 @@ const Footer = () => (
         </div>
       </div>
       
-      <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
+      <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-medium">
         <p>© 2026 S3S México. Todos los derechos reservados.</p>
         <div className="flex gap-6">
           <Link to="/privacidad" className="hover:text-white transition-colors">Aviso de Privacidad</Link>
