@@ -823,21 +823,23 @@ const ContactCTA = () => {
             </div>
           </div>
           
-          <div className="bg-white rounded-3xl p-4 md:p-6 text-brand-grey h-[700px] lg:h-[800px] flex items-center justify-center overflow-hidden shadow-xl">
-            {/* 
-              Para cambiar el calendario de Microsoft Bookings en el futuro:
-              1. Ve a tu panel de Microsoft Bookings
-              2. Copia el enlace de tu página de reservas
-              3. Reemplaza la URL en el atributo 'src' del iframe de abajo
-            */}
-            <iframe 
-              src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
-              className="w-full h-full"
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              title="Agendar Cita con S3S México"
-            ></iframe>
+          <div className="bg-white rounded-3xl p-2 md:p-4 text-brand-grey h-[700px] lg:h-[800px] overflow-hidden shadow-xl">
+            <div className="w-full h-full relative rounded-2xl overflow-hidden">
+              {/* 
+                Para cambiar el calendario de Microsoft Bookings en el futuro:
+                1. Ve a tu panel de Microsoft Bookings
+                2. Copia el enlace de tu página de reservas
+                3. Reemplaza la URL en el atributo 'src' del iframe de abajo
+              */}
+              <iframe 
+                src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
+                className="absolute top-0 left-0 w-full h-full"
+                style={{ border: 0 }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                title="Agendar Cita con S3S México"
+              ></iframe>
+            </div>
           </div>
         </div>
         
