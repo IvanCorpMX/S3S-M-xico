@@ -34,7 +34,8 @@ import {
   Music,
   ArrowLeft,
   Flame,
-  Globe
+  Globe,
+  Leaf
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
@@ -59,9 +60,9 @@ const solutionsData: Solution[] = [
     id: "calidad-energia",
     icon: <Activity className="w-8 h-8" />,
     title: "Calidad de Energía",
-    desc: "Estudios y soluciones para un suministro eléctrico estable y eficiente.",
-    tags: ["Diagnóstico", "Factor de Potencia", "Armónicos"],
-    details: "La calidad de energía es crucial para el funcionamiento eficiente y seguro de cualquier instalación eléctrica. Realizamos estudios detallados para identificar y analizar problemas como fluctuaciones de voltaje, armónicos y otros disturbios eléctricos.",
+    desc: "Protege tu inversión en milisegundos. Evita que las variaciones de voltaje dañen tus equipos o acorten su vida útil.",
+    tags: ["Supresores de Picos", "Diagnóstico", "Armónicos"],
+    details: "¿Qué es un supresor de picos? Es un dispositivo vital de protección contra sobretensiones transitorias. Al interrumpir y desviar la energía excedente a tierra en cuestión de milisegundos, evita daños catastróficos a tus dispositivos conectados. Las sobretensiones son invisibles pero peligrosas; nosotros nos aseguramos de que tu operación nunca se vea afectada.",
     specs: [
       "Evaluación y Diagnóstico detallado",
       "Corrección de Factor de Potencia",
@@ -77,9 +78,9 @@ const solutionsData: Solution[] = [
     id: "respaldo-energia",
     icon: <Battery className="w-8 h-8" />,
     title: "Respaldo de Energía (UPS)",
-    desc: "Sistemas de alimentación ininterrumpida para proteger equipos críticos.",
+    desc: "Que un apagón no detenga tu operación. Energía continua e instantánea para proteger tus equipos más sensibles.",
     tags: ["UPS", "Baterías", "Mantenimiento"],
-    details: "En un mundo donde la continuidad operativa es crucial, contar con sistemas de respaldo de energía es esencial. Nuestros sistemas UPS están diseñados para proporcionar energía continua en caso de interrupciones, protegiendo datos y manteniendo la operatividad de equipos sensibles.",
+    details: "¿Qué es un UPS? Un Uninterruptable Power Supply es tu primera línea de defensa. Permite mantener el flujo de energía eléctrica por medio de baterías cuando el suministro falla. Al mismo tiempo, purifica la corriente protegiendo tus dispositivos contra elevaciones o caídas de tensión, sosteniendo tu funcionamiento sin interrupciones.",
     specs: [
       "Sistemas UPS de alta confiabilidad",
       "Baterías de Respaldo de alta capacidad",
@@ -94,9 +95,9 @@ const solutionsData: Solution[] = [
     id: "generadores-emergencia",
     icon: <Zap className="w-8 h-8" />,
     title: "Generadores de Emergencia",
-    desc: "Suministro eléctrico confiable y continuo en situaciones críticas.",
+    desc: "Potencia inagotable cuando más la necesitas. Plantas eléctricas que se adaptan a las exigencias de tu negocio.",
     tags: ["Diésel", "Gas LP", "Portátiles"],
-    details: "Ofrecemos una gama completa de soluciones en generadores de energía que se adaptan a las necesidades específicas de cada cliente. Diseñados para proporcionar energía de respaldo en caso de fallos en el suministro eléctrico principal.",
+    details: "¿Qué es una Planta de Emergencia? Es un sistema compuesto por un robusto motor de combustión interna impulsado por diésel, que activa un generador de electricidad de alta capacidad. Estos sistemas son totalmente programables y sincronizables, adaptándose fácilmente a las necesidades de tu negocio para garantizar que nunca te quedes a oscuras.",
     specs: [
       "Generadores Diésel y Gasolina",
       "Generadores a GLP o Gas Natural",
@@ -111,9 +112,9 @@ const solutionsData: Solution[] = [
     id: "sistemas-fotovoltaicos",
     icon: <Sun className="w-8 h-8" />,
     title: "Sistemas Fotovoltaicos",
-    desc: "Generación de electricidad de manera sostenible y limpia.",
-    tags: ["Energía Solar", "Interconexión CFE", "Incentivos"],
-    details: "Los sistemas fotovoltaicos son una tecnología avanzada que captan la luz solar y la convierten en electricidad. Diseñamos e instalamos sistemas solares para la generación de energía limpia y renovable, optimizando el consumo y reduciendo costos.",
+    desc: "Convierte el sol en ahorro directo. Reduce hasta un 90% tu recibo de luz con energía limpia y renovable.",
+    tags: ["Ahorro 90%", "Interconexión CFE", "Incentivos"],
+    details: "¿Qué es un panel solar? Son módulos formados por celdas de silicio que captan los rayos UV del sol. La energía generada pasa a un inversor que la transforma en corriente eléctrica, inyectándola directamente a la red de tu hogar o negocio. El resultado: un impacto positivo en el medio ambiente y un ahorro masivo en tus costos operativos.",
     specs: [
       "Diseño e Instalación de paneles solares",
       "Monitoreo y Mantenimiento",
@@ -1135,11 +1136,73 @@ const ContactPage = () => (
   </div>
 );
 
+const ImpactSection = () => (
+  <section className="py-20 bg-brand-orange text-white relative overflow-hidden">
+    <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay" />
+    </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="text-center mb-16">
+        <h2 className="font-bold uppercase tracking-widest text-sm mb-4 text-white/80">Nuestro Impacto</h2>
+        <h3 className="text-3xl md:text-4xl font-black mb-6">Resultados que transforman</h3>
+        <p className="text-white/90 max-w-2xl mx-auto text-lg">
+          No solo instalamos equipos, generamos un impacto real en el medio ambiente y en la rentabilidad de tu negocio.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 hover:bg-white/20 transition-colors"
+        >
+          <div className="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-6">
+            <Leaf className="w-8 h-8 text-white" />
+          </div>
+          <div className="text-5xl font-black mb-2">67+</div>
+          <div className="text-lg font-medium text-white/90">Toneladas de CO2<br/>Ahorradas al año</div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 hover:bg-white/20 transition-colors"
+        >
+          <div className="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-6">
+            <Sun className="w-8 h-8 text-white" />
+          </div>
+          <div className="text-5xl font-black mb-2">70+</div>
+          <div className="text-lg font-medium text-white/90">Paneles Solares<br/>Instalados</div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 hover:bg-white/20 transition-colors"
+        >
+          <div className="w-16 h-16 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-6">
+            <Zap className="w-8 h-8 text-white" />
+          </div>
+          <div className="text-5xl font-black mb-2">38KW</div>
+          <div className="text-lg font-medium text-white/90">De Potencia<br/>Instalada</div>
+        </motion.div>
+      </div>
+    </div>
+  </section>
+);
+
 const LandingPage = () => (
   <>
     <Hero />
     <ProblemSection />
     <SolutionsSection />
+    <ImpactSection />
     <SectorsSection />
     <IsoCertificationSection />
     <ProcessSection />
