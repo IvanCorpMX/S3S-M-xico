@@ -48,11 +48,7 @@ interface Solution {
   tags: string[];
   details: string;
   specs: string[];
-  image: string;
-  catalog: {
-    name: string;
-    size: string;
-  };
+  images: string[];
 }
 
 const solutionsData: Solution[] = [
@@ -70,9 +66,10 @@ const solutionsData: Solution[] = [
       "Supresores de Picos y Telemetría",
       "Puntas Pararrayos y Tierras Físicas"
     ],
-    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/calidad-energia.webp")
-    image: "/images/calidad-energia.webp",
-    catalog: { name: "brochure.pdf", size: "2.5 MB" }
+    images: [
+      "/images/calidad-energia.webp",
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80"
+    ]
   },
   {
     id: "respaldo-energia",
@@ -87,9 +84,10 @@ const solutionsData: Solution[] = [
       "Mantenimiento preventivo y correctivo",
       "Protección para equipos críticos"
     ],
-    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/ups.webp")
-    image: "/images/ups.webp",
-    catalog: { name: "brochure.pdf", size: "2.5 MB" }
+    images: [
+      "/images/ups.webp",
+      "https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&q=80"
+    ]
   },
   {
     id: "generadores-emergencia",
@@ -104,9 +102,10 @@ const solutionsData: Solution[] = [
       "Generadores Portátiles",
       "Mantenimiento, Soporte Técnico y Pruebas"
     ],
-    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/generadores.webp")
-    image: "/images/generadores.webp",
-    catalog: { name: "brochure.pdf", size: "2.5 MB" }
+    images: [
+      "/images/generadores.webp",
+      "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80"
+    ]
   },
   {
     id: "sistemas-fotovoltaicos",
@@ -121,9 +120,10 @@ const solutionsData: Solution[] = [
       "Asesoría en Incentivos y financiamiento",
       "Gestión de Trámites ante la CFE"
     ],
-    // Para cambiar la imagen, reemplaza esta URL por la ruta de tu nueva imagen (ej. "/images/solar.webp")
-    image: "/images/solar.webp",
-    catalog: { name: "brochure.pdf", size: "2.5 MB" }
+    images: [
+      "/images/solar.webp",
+      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80"
+    ]
   },
   {
     id: "proteccion",
@@ -131,15 +131,17 @@ const solutionsData: Solution[] = [
     title: "Protección",
     desc: "Sistemas de tierra física y sistemas de pararrayos.",
     tags: ["Tierra Física", "Pararrayos", "Seguridad"],
-    details: "Protegemos tus instalaciones y equipos contra descargas atmosféricas y variaciones de voltaje mediante sistemas de tierra física y pararrayos de alta eficiencia.",
+    details: "Protegemos tus instalaciones y equipos contra descargas atmosféricas y variaciones de voltaje mediante sistemas de tierra física y pararrayos de alta eficiencia. Evita daños catastróficos por fenómenos naturales y asegura la integridad de tu personal y tu infraestructura.",
     specs: [
       "Sistemas de Tierra Física",
       "Sistemas de Pararrayos",
       "Estudios de Resistividad",
       "Mantenimiento preventivo"
     ],
-    image: "/images/proteccion.webp",
-    catalog: { name: "brochure.pdf", size: "2.5 MB" }
+    images: [
+      "/images/proteccion.webp",
+      "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?auto=format&fit=crop&q=80"
+    ]
   }
 ];
 
@@ -533,7 +535,7 @@ const SolutionsSection = () => {
               >
                 <div className="h-full aspect-square relative overflow-hidden shrink-0 bg-gray-50">
                   <img 
-                    src={sol.image} 
+                    src={sol.images[0]} 
                     alt={sol.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     referrerPolicy="no-referrer"
@@ -923,84 +925,85 @@ const SolutionDetail = () => {
   }
 
   return (
-    <div className="pt-32 pb-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <button 
-        onClick={() => navigate('/')}
-        className="flex items-center gap-2 text-gray-500 hover:text-brand-orange font-bold mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-5 h-5" /> Volver a soluciones
-      </button>
-      
-      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100">
-        <div className="flex items-center gap-6 mb-8">
-          <div className="w-20 h-20 bg-industrial-light rounded-2xl flex items-center justify-center text-brand-orange">
-            {solution.icon}
-          </div>
-          <div>
-            <h1 className="text-4xl font-black text-industrial-dark mb-2">{solution.title}</h1>
+    <div className="bg-white min-h-screen pb-24">
+      {/* Hero Section for the Solution */}
+      <div className="bg-industrial-dark text-white pt-32 pb-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <img src={solution.images[0]} alt={solution.title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-industrial-dark to-transparent" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <button 
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-gray-300 hover:text-brand-orange font-bold mb-8 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" /> Volver a soluciones
+          </button>
+          
+          <div className="flex items-center gap-6 mb-6">
+            <div className="w-16 h-16 bg-brand-orange rounded-2xl flex items-center justify-center text-white">
+              {solution.icon}
+            </div>
             <div className="flex flex-wrap gap-2">
               {solution.tags.map((tag, j) => (
-                <span key={j} className="text-xs font-bold uppercase tracking-wider bg-brand-orange/10 text-brand-orange px-3 py-1 rounded-full">
+                <span key={j} className="text-xs font-bold uppercase tracking-wider bg-white/10 text-white px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">
                   {tag}
                 </span>
               ))}
             </div>
           </div>
+          <h1 className="text-4xl md:text-6xl font-black mb-6 max-w-3xl">{solution.title}</h1>
+          <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">{solution.desc}</p>
         </div>
+      </div>
 
-        <div className="space-y-8">
+      {/* Content Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
           <div>
-            <h3 className="text-xl font-bold mb-4">Descripción General</h3>
-            <p className="text-gray-600 leading-relaxed text-lg">{solution.details}</p>
+            <div className="prose prose-lg text-gray-600">
+              <p className="leading-relaxed">{solution.details}</p>
+            </div>
+            
+            <div className="mt-12">
+              <h4 className="text-xl font-bold uppercase tracking-widest text-brand-orange mb-6 flex items-center gap-2">
+                <Cpu className="w-6 h-6" /> ¿Qué ofrecemos?
+              </h4>
+              <ul className="space-y-4">
+                {solution.specs.map((spec, i) => (
+                  <li key={i} className="flex items-start gap-4 text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <CheckCircle2 className="w-6 h-6 text-green-500 shrink-0" /> 
+                    <span className="font-medium text-lg">{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           
-          <div>
-            <h4 className="text-lg font-bold uppercase tracking-widest text-brand-orange mb-4 flex items-center gap-2">
-              <Cpu className="w-5 h-5" /> Especificaciones Técnicas
-            </h4>
-            <ul className="grid sm:grid-cols-2 gap-4">
-              {solution.specs.map((spec, i) => (
-                <li key={i} className="flex items-start gap-3 text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" /> 
-                  <span className="font-medium">{spec}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-industrial-light p-6 rounded-2xl border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="bg-white p-3 rounded-xl shadow-sm">
-                <FileText className="w-8 h-8 text-brand-orange" />
-              </div>
-              <div>
-                <p className="font-bold text-industrial-dark text-lg">{solution.catalog.name}</p>
-                <p className="text-sm text-gray-500">Documento PDF • {solution.catalog.size}</p>
-              </div>
+          <div className="sticky top-24">
+            <div className="rounded-3xl overflow-hidden shadow-2xl h-[500px] md:h-[600px]">
+              <img src={solution.images[0]} alt={solution.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </div>
-            <a 
-              href={`/${solution.catalog.name}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-6 py-3 rounded-xl font-bold bg-white border-2 border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
-            >
-              <Download className="w-5 h-5" /> Descargar Ficha
-            </a>
           </div>
-
-          <div className="pt-8 border-t border-gray-100">
-            <button 
-              onClick={() => {
-                navigate('/', { state: { selectedService: solution.title } });
-                setTimeout(() => {
-                  document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }}
-              className="btn-primary w-full text-lg py-5"
-            >
-              Solicitar Cotización para {solution.title}
-            </button>
-          </div>
+        </div>
+      </div>
+      
+      {/* CTA Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="bg-brand-orange rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+           <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay" />
+           <div className="relative z-10">
+             <h3 className="text-3xl md:text-4xl font-black mb-6">¿Listo para implementar esta solución?</h3>
+             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">Nuestros expertos están listos para evaluar tus necesidades y diseñar la mejor estrategia para tu empresa.</p>
+             <button onClick={() => {
+               navigate('/', { state: { selectedService: solution.title } });
+               setTimeout(() => {
+                 document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
+               }, 100);
+             }} className="bg-white text-brand-orange px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+               Solicitar Cotización para {solution.title}
+             </button>
+           </div>
         </div>
       </div>
     </div>
