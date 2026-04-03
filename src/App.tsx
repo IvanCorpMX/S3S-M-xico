@@ -38,7 +38,7 @@ import {
   Leaf
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 
 interface Solution {
   id: string;
@@ -1286,7 +1286,7 @@ const PrivacyPage = () => {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="min-h-screen font-sans selection:bg-brand-orange selection:text-white">
         <Navbar />
         <main>
@@ -1301,6 +1301,6 @@ export default function App() {
         <Footer />
         <FloatingWhatsApp />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
