@@ -38,7 +38,7 @@ import {
   Leaf
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 
 interface Solution {
   id: string;
@@ -462,6 +462,7 @@ const ProblemSection = () => (
 const SolutionsSection = () => {
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const nextSlide = () => {
     if (scrollContainerRef.current) {
@@ -479,6 +480,8 @@ const SolutionsSection = () => {
 
   // Auto-play del carrusel cada 4 segundos
   useEffect(() => {
+    if (isHovered) return;
+
     const timer = setInterval(() => {
       if (scrollContainerRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
@@ -491,7 +494,7 @@ const SolutionsSection = () => {
       }
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isHovered]);
   
   return (
     <section id="soluciones" className="py-24 bg-white overflow-hidden">
@@ -517,7 +520,11 @@ const SolutionsSection = () => {
           </div>
         </div>
 
-        <div className="relative -mx-4 sm:mx-0">
+        <div 
+          className="relative -mx-4 sm:mx-0"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div 
             ref={scrollContainerRef}
             className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 px-4 sm:px-0 hide-scrollbar"
@@ -748,12 +755,32 @@ const ContactCTA = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showIframe, setShowIframe] = useState(false);
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (location.state?.selectedService) {
       setFormData(prev => ({ ...prev, servicio: location.state.selectedService }));
     }
   }, [location.state]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShowIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    if (iframeContainerRef.current) {
+      observer.observe(iframeContainerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -827,21 +854,22 @@ const ContactCTA = () => {
           </div>
           
           <div className="bg-white rounded-3xl p-2 md:p-4 text-brand-grey h-[700px] lg:h-[800px] overflow-hidden shadow-xl">
-            <div className="w-full h-full relative rounded-2xl overflow-hidden">
-              {/* 
-                Para cambiar el calendario de Microsoft Bookings en el futuro:
-                1. Ve a tu panel de Microsoft Bookings
-                2. Copia el enlace de tu página de reservas
-                3. Reemplaza la URL en el atributo 'src' del iframe de abajo
-              */}
-              <iframe 
-                src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
-                className="absolute top-0 left-0 w-full h-full"
-                style={{ border: 0 }} 
-                allowFullScreen={true} 
-                loading="lazy" 
-                title="Agendar Cita con S3S México"
-              ></iframe>
+            <div ref={iframeContainerRef} className="w-full h-full relative rounded-2xl overflow-hidden bg-gray-50 flex items-center justify-center">
+              {!showIframe ? (
+                <div className="text-gray-400 flex flex-col items-center gap-4">
+                  <div className="w-8 h-8 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
+                  <p>Cargando calendario...</p>
+                </div>
+              ) : (
+                <iframe 
+                  src="https://outlook.office.com/bookwithme/user/d60d482122d6426d8e38f7285ba9b2a7@corp-mx.com?anonymous&ep=plink" 
+                  className="absolute top-0 left-0 w-full h-full"
+                  style={{ border: 0 }} 
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  title="Agendar Cita con S3S México"
+                ></iframe>
+              )}
             </div>
           </div>
         </div>
@@ -912,6 +940,10 @@ const SolutionDetail = () => {
   const { id } = useParams();
   const solution = solutionsData.find(s => s.id === id);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   if (!solution) {
     return (
@@ -1200,19 +1232,25 @@ const ImpactSection = () => (
   </section>
 );
 
-const LandingPage = () => (
-  <>
-    <Hero />
-    <ProblemSection />
-    <SolutionsSection />
-    <ImpactSection />
-    <SectorsSection />
-    <IsoCertificationSection />
-    <ProcessSection />
-    <Certifications />
-    <ContactCTA />
-  </>
-);
+const LandingPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <>
+      <Hero />
+      <ProblemSection />
+      <SolutionsSection />
+      <ImpactSection />
+      <SectorsSection />
+      <IsoCertificationSection />
+      <ProcessSection />
+      <Certifications />
+      <ContactCTA />
+    </>
+  );
+};
 
 const FloatingWhatsApp = () => (
   <a 
@@ -1296,6 +1334,7 @@ export default function App() {
             <Route path="/nosotros" element={<AboutPage />} />
             <Route path="/contacto" element={<ContactPage />} />
             <Route path="/privacidad" element={<PrivacyPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
         <Footer />
