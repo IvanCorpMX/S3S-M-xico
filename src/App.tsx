@@ -149,8 +149,10 @@ const Logo = ({ className = "h-10" }: { className?: string }) => (
   <div className={`flex items-center gap-2 ${className}`}>
     <img 
       src="/logo.png" 
-      alt="S3S México Logo" 
+      alt="S3S México - Ingeniería Eléctrica y Respaldo de Energía" 
       className="h-full w-auto object-contain"
+      loading="lazy"
+      decoding="async"
       onError={(e) => {
         (e.target as HTMLImageElement).style.display = 'none';
         (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
@@ -214,7 +216,7 @@ const Navbar = () => {
           </div>
 
           <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2">
+            <button onClick={() => setIsOpen(!isOpen)} className="p-2" aria-label="Alternar menú de navegación">
               {isOpen ? <X /> : <Menu />}
             </button>
           </div>
@@ -368,6 +370,7 @@ const Hero = () => {
                 <button 
                   key={idx}
                   onClick={() => setCurrentSlide(idx)}
+                  aria-label={`Ir a la diapositiva ${idx + 1}`}
                   className={`w-2 h-2 rounded-full transition-all ${idx === currentSlide ? 'bg-brand-orange w-6' : 'bg-white/50 hover:bg-white'}`}
                 />
               ))}
@@ -395,8 +398,8 @@ const ProblemSection = () => (
     
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="text-center mb-16">
-        <h2 className="text-orange-400 font-bold uppercase tracking-widest text-sm mb-4">El costo de la inacción</h2>
-        <h3 className="text-4xl md:text-5xl font-black mb-6">¿Cuánto te cuesta un apagón?</h3>
+        <span className="block text-orange-400 font-bold uppercase tracking-widest text-sm mb-4">El costo de la inacción</span>
+        <h2 className="text-4xl md:text-5xl font-black mb-6">¿Cuánto te cuesta un apagón?</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
           No tener un sistema de respaldo es más caro que adquirir uno. Descubre el impacto real de las fallas eléctricas en las empresas mexicanas.
         </p>
@@ -432,7 +435,7 @@ const ProblemSection = () => (
             className="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm flex flex-col"
           >
             <div className="mb-6">{item.icon}</div>
-            <h4 className="text-xl font-bold mb-4">{item.title}</h4>
+            <h3 className="text-xl font-bold mb-4">{item.title}</h3>
             <p className="text-gray-300 leading-relaxed mb-6 flex-grow">{item.desc}</p>
             <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-gray-500 hover:text-brand-orange transition-colors mt-auto">
               Fuente: {item.source}
@@ -446,7 +449,7 @@ const ProblemSection = () => (
           <MapPin className="w-8 h-8 text-brand-orange" />
         </div>
         <div>
-          <h4 className="text-lg font-bold text-white mb-2">Contexto Local: Impacto en el Sureste</h4>
+          <h3 className="text-lg font-bold text-white mb-2">Contexto Local: Impacto en el Sureste</h3>
           <p className="text-gray-300 text-sm leading-relaxed mb-2">
             Más de <strong>130,000 comercios</strong> reportaron pérdidas significativas por fallas eléctricas recientes en la región. La prevención es clave para la continuidad operativa.
           </p>
@@ -501,18 +504,20 @@ const SolutionsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Nuestras Soluciones</h2>
-            <h3 className="section-title">Energía Segura y Respaldo Total</h3>
+            <span className="block text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Nuestras Soluciones</span>
+            <h2 className="section-title">Energía Segura y Respaldo Total</h2>
           </div>
           <div className="flex gap-4">
             <button 
               onClick={prevSlide}
+              aria-label="Ver solución anterior"
               className="w-12 h-12 rounded-full border-2 border-brand-grey flex items-center justify-center hover:bg-brand-grey hover:text-white transition-colors"
             >
               <ArrowRight className="w-5 h-5 rotate-180" />
             </button>
             <button 
               onClick={nextSlide}
+              aria-label="Ver siguiente solución"
               className="w-12 h-12 rounded-full border-2 border-brand-orange flex items-center justify-center text-brand-orange hover:bg-brand-orange hover:text-white transition-colors"
             >
               <ArrowRight className="w-5 h-5" />
@@ -543,8 +548,10 @@ const SolutionsSection = () => {
                 <div className="h-full aspect-square relative overflow-hidden shrink-0 bg-gray-50">
                   <img 
                     src={sol.images[0]} 
-                    alt={sol.title} 
+                    alt={`Solución industrial: ${sol.title} para respaldo energético`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -554,7 +561,7 @@ const SolutionsSection = () => {
                       <div className="w-10 h-10 bg-industrial-light rounded-lg flex items-center justify-center text-brand-grey group-hover:bg-brand-orange group-hover:text-white transition-all shrink-0 [&>svg]:w-5 [&>svg]:h-5">
                         {sol.icon}
                       </div>
-                      <h4 className="text-base md:text-lg font-bold line-clamp-2 leading-tight">{sol.title}</h4>
+                      <h3 className="text-base md:text-lg font-bold line-clamp-2 leading-tight">{sol.title}</h3>
                     </div>
                     <p className="text-gray-600 text-xs md:text-sm line-clamp-3 md:line-clamp-4 leading-relaxed">{sol.desc}</p>
                   </div>
@@ -582,8 +589,8 @@ const SectorsSection = () => (
   <section id="sectores" className="py-24 bg-industrial-light">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
-        <h2 className="text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Especialización por Sector</h2>
-        <h3 className="section-title">Soluciones a la Medida</h3>
+        <span className="block text-brand-orange font-bold uppercase tracking-widest text-sm mb-4">Especialización por Sector</span>
+        <h2 className="section-title">Soluciones a la Medida</h2>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -597,7 +604,7 @@ const SectorsSection = () => (
             <div className="w-20 h-20 mx-auto bg-industrial-light rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-grey group-hover:text-white transition-all duration-300">
               {sector.icon}
             </div>
-            <h4 className="text-xl font-bold mb-2">{sector.name}</h4>
+            <h3 className="text-xl font-bold mb-2">{sector.name}</h3>
             <p className="text-gray-500 text-sm leading-relaxed">{sector.desc}</p>
           </div>
         ))}
@@ -613,8 +620,10 @@ const IsoCertificationSection = () => (
         <div className="w-64 md:w-80 shrink-0">
           <img 
             src="/logos/iso27001.png" 
-            alt="ISO 27001" 
+            alt="Certificación ISO 27001 en Gestión de Seguridad de la Información" 
             className="w-full h-auto object-contain"
+            loading="lazy"
+            decoding="async"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
               (e.target as HTMLImageElement).nextElementSibling!.classList.remove('hidden');
@@ -623,7 +632,7 @@ const IsoCertificationSection = () => (
           <Globe className="w-20 h-20 text-brand-orange hidden mx-auto" />
         </div>
         <div className="text-center md:text-left">
-          <h3 className="text-3xl font-bold text-industrial-dark mb-4">Certificación ISO 27001</h3>
+          <h2 className="text-3xl font-bold text-industrial-dark mb-4">Certificación ISO 27001</h2>
           <p className="text-gray-600 max-w-2xl text-lg">
             Estamos certificados en ISO 27001, garantizando los más altos estándares en la gestión de la seguridad de la información para proteger los datos y la operación de nuestros clientes.
           </p>
@@ -638,8 +647,8 @@ const ProcessSection = () => (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 className="text-orange-400 font-bold uppercase tracking-widest text-sm mb-4">Metodología S3S</h2>
-          <h3 className="text-4xl md:text-5xl font-black mb-8">De la ingeniería a la operación</h3>
+          <span className="block text-orange-400 font-bold uppercase tracking-widest text-sm mb-4">Metodología S3S</span>
+          <h2 className="text-4xl md:text-5xl font-black mb-8">De la ingeniería a la operación</h2>
           <div className="space-y-8">
             {[
               { step: "01", title: "Levantamiento Técnico", desc: "Análisis de cargas y diagnóstico de calidad de energía en sitio." },
@@ -650,7 +659,7 @@ const ProcessSection = () => (
               <div key={i} className="flex gap-6">
                 <span className="text-4xl font-black text-white/20">{item.step}</span>
                 <div>
-                  <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                   <p className="text-gray-400 text-sm">{item.desc}</p>
                 </div>
               </div>
@@ -660,8 +669,10 @@ const ProcessSection = () => (
         <div className="relative">
           <img 
             src="/images/proceso.webp" 
-            alt="Engineering Process" 
+            alt="Ingenieros de S3S México realizando mantenimiento e instalación de equipos UPS y plantas de luz" 
             className="rounded-3xl shadow-2xl"
+            loading="lazy"
+            decoding="async"
             referrerPolicy="no-referrer"
           />
           <div className="absolute -bottom-6 -right-6 bg-brand-orange p-8 rounded-2xl shadow-xl">
@@ -701,8 +712,10 @@ const Certifications = () => {
               <div key={i} className="flex-shrink-0 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 <img 
                   src={brand.logo} 
-                  alt={brand.name} 
+                  alt={`Marca aliada: ${brand.name} - Equipos de respaldo energético`}
                   className="h-12 w-auto object-contain" 
+                  loading="lazy"
+                  decoding="async"
                   onLoad={(e) => {
                     (e.target as HTMLImageElement).nextElementSibling!.classList.add('hidden');
                   }}
@@ -724,8 +737,10 @@ const Certifications = () => {
               <div key={i} className="flex-shrink-0 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
                 <img 
                   src={brand.logo} 
-                  alt={brand.name} 
+                  alt={`Certificación: ${brand.name} - Estándares de calidad eléctrica`}
                   className="h-12 w-auto object-contain" 
+                  loading="lazy"
+                  decoding="async"
                   onLoad={(e) => {
                     (e.target as HTMLImageElement).nextElementSibling!.classList.add('hidden');
                   }}
@@ -892,16 +907,16 @@ const Footer = () => (
             Líderes en soluciones de respaldo energético y eficiencia industrial en México. Garantizamos la continuidad de tu negocio con tecnología de vanguardia.
           </p>
           <div className="flex gap-4">
-            <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+            <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
               <Linkedin className="w-4 h-4" />
             </a>
-            <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+            <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" aria-label="Visitar página de Facebook" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
               <Facebook className="w-4 h-4" />
             </a>
-            <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+            <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de Instagram" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
+            <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de TikTok" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors cursor-pointer">
               <Music className="w-4 h-4" />
             </a>
           </div>
@@ -961,7 +976,7 @@ const SolutionDetail = () => {
       {/* Hero Section for the Solution */}
       <div className="bg-industrial-dark text-white pt-32 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img src={solution.images[0]} alt={solution.title} className="w-full h-full object-cover" />
+          <img src={solution.images[0]} alt={`Fondo de ${solution.title} - S3S México`} className="w-full h-full object-cover" loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-industrial-dark to-transparent" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -1014,7 +1029,7 @@ const SolutionDetail = () => {
           
           <div className="sticky top-24">
             <div className="rounded-3xl overflow-hidden shadow-2xl h-[500px] md:h-[600px]">
-              <img src={solution.images[0]} alt={solution.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={solution.images[0]} alt={`Detalle de equipo: ${solution.title} instalado por S3S México`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -1058,8 +1073,10 @@ const AboutPage = () => (
       <div className="relative">
         <img 
           src="/images/nosotros.webp" 
-          alt="Equipo S3S México" 
+          alt="Equipo de ingenieros de S3S México trabajando en soluciones de energía industrial" 
           className="rounded-3xl shadow-2xl object-cover w-full h-[400px]"
+          loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
         />
         <div className="absolute -bottom-6 -left-6 bg-brand-orange p-6 rounded-2xl shadow-xl text-white">
@@ -1132,16 +1149,16 @@ const ContactPage = () => (
       <div className="bg-industrial-dark text-white p-8 rounded-3xl shadow-lg">
         <h3 className="text-2xl font-bold mb-6">Nuestras Redes Sociales</h3>
         <div className="flex gap-4">
-          <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://mx.linkedin.com/company/s3s-méxico" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de LinkedIn" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Linkedin className="w-6 h-6" />
           </a>
-          <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.facebook.com/S3SMexico" target="_blank" rel="noopener noreferrer" aria-label="Visitar página de Facebook" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Facebook className="w-6 h-6" />
           </a>
-          <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.instagram.com/s3smexico/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de Instagram" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Instagram className="w-6 h-6" />
           </a>
-          <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
+          <a href="https://www.tiktok.com/@s3smexico" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de TikTok" className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-orange transition-colors">
             <Music className="w-6 h-6" />
           </a>
         </div>
@@ -1178,8 +1195,8 @@ const ImpactSection = () => (
     </div>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="text-center mb-16">
-        <h2 className="font-bold uppercase tracking-widest text-sm mb-4 text-white/80">Nuestro Impacto</h2>
-        <h3 className="text-3xl md:text-4xl font-black mb-6">Resultados que transforman</h3>
+        <span className="block font-bold uppercase tracking-widest text-sm mb-4 text-white/80">Nuestro Impacto</span>
+        <h2 className="text-3xl md:text-4xl font-black mb-6">Resultados que transforman</h2>
         <p className="text-white/90 max-w-2xl mx-auto text-lg">
           No solo instalamos equipos, generamos un impacto real en el medio ambiente y en la rentabilidad de tu negocio.
         </p>
