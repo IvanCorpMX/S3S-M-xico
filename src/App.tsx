@@ -37,8 +37,13 @@ import {
   Globe,
   Leaf
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useAnimation } from 'motion/react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
+import { MapContainer, TileLayer, useMap, Circle, Marker, Polyline } from 'react-leaflet';
+import L from 'leaflet';
+
+// Fix Leaflet icon issue
+import 'leaflet/dist/leaflet.css';
 
 interface Solution {
   id: string;
@@ -56,7 +61,7 @@ const solutionsData: Solution[] = [
     id: "calidad-energia",
     icon: <Activity className="w-8 h-8" />,
     title: "Calidad de Energía",
-    desc: "Protege tu inversión en milisegundos. Evita que las variaciones de voltaje dañen tus equipos o acorten su vida útil.",
+    desc: "Protege tu inversión en milisegundos. Evita daños por variaciones de voltaje y prolonga la vida útil de tus equipos.",
     tags: ["Supresores de Picos", "Diagnóstico", "Armónicos"],
     details: "¿Qué es un supresor de picos? Es un dispositivo vital de protección contra sobretensiones transitorias. Al interrumpir y desviar la energía excedente a tierra en cuestión de milisegundos, evita daños catastróficos a tus dispositivos conectados. Las sobretensiones son invisibles pero peligrosas; nosotros nos aseguramos de que tu operación nunca se vea afectada.",
     specs: [
@@ -75,7 +80,7 @@ const solutionsData: Solution[] = [
     id: "respaldo-energia",
     icon: <Battery className="w-8 h-8" />,
     title: "Respaldo de Energía (UPS)",
-    desc: "Que un apagón no detenga tu operación. Energía continua e instantánea para proteger tus equipos más sensibles.",
+    desc: "Energía continua e instantánea para que tu operación no se detenga ante ningún apagón.",
     tags: ["UPS", "Baterías", "Mantenimiento"],
     details: "¿Qué es un UPS? Un Uninterruptable Power Supply es tu primera línea de defensa. Permite mantener el flujo de energía eléctrica por medio de baterías cuando el suministro falla. Al mismo tiempo, purifica la corriente protegiendo tus dispositivos contra elevaciones o caídas de tensión, sosteniendo tu funcionamiento sin interrupciones.",
     specs: [
@@ -93,7 +98,7 @@ const solutionsData: Solution[] = [
     id: "generadores-emergencia",
     icon: <Zap className="w-8 h-8" />,
     title: "Generadores de Emergencia",
-    desc: "Potencia inagotable cuando más la necesitas. Plantas eléctricas que se adaptan a las exigencias de tu negocio.",
+    desc: "Potencia confiable cuando más la necesitas. Soluciones adaptadas a la demanda de tu negocio.",
     tags: ["Diésel", "Gas LP", "Portátiles"],
     details: "¿Qué es una Planta de Emergencia? Es un sistema compuesto por un robusto motor de combustión interna impulsado por diésel, que activa un generador de electricidad de alta capacidad. Estos sistemas son totalmente programables y sincronizables, adaptándose fácilmente a las necesidades de tu negocio para garantizar que nunca te quedes a oscuras.",
     specs: [
@@ -111,7 +116,7 @@ const solutionsData: Solution[] = [
     id: "sistemas-fotovoltaicos",
     icon: <Sun className="w-8 h-8" />,
     title: "Sistemas Fotovoltaicos",
-    desc: "Convierte el sol en ahorro directo. Reduce hasta un 90% tu recibo de luz con energía limpia y renovable.",
+    desc: "Convierte el sol en ahorro. Reduce hasta un 90% tu recibo con energía limpia y renovable.",
     tags: ["Ahorro 90%", "Interconexión CFE", "Incentivos"],
     details: "¿Qué es un panel solar? Son módulos formados por celdas de silicio que captan los rayos UV del sol. La energía generada pasa a un inversor que la transforma en corriente eléctrica, inyectándola directamente a la red de tu hogar o negocio. El resultado: un impacto positivo en el medio ambiente y un ahorro masivo en tus costos operativos.",
     specs: [
@@ -128,8 +133,8 @@ const solutionsData: Solution[] = [
   {
     id: "proteccion",
     icon: <ShieldCheck className="w-8 h-8" />,
-    title: "Protección",
-    desc: "Sistemas de tierra física y sistemas de pararrayos.",
+    title: "Protección Eléctrica",
+    desc: "Tierra física y pararrayos para proteger tu infraestructura ante descargas y fallas eléctricas.",
     tags: ["Tierra Física", "Pararrayos", "Seguridad"],
     details: "Protegemos tus instalaciones y equipos contra descargas atmosféricas y variaciones de voltaje mediante sistemas de tierra física y pararrayos de alta eficiencia. Evita daños catastróficos por fenómenos naturales y asegura la integridad de tu personal y tu infraestructura.",
     specs: [
@@ -269,6 +274,12 @@ const Hero = () => {
       image: "/images/hero-solar.webp",
       tag: "Energía Renovable",
       icon: <Sun className="w-6 h-6" />
+    },
+    {
+      title: "Protección Eléctrica",
+      image: "/images/hero-proteccion.webp",
+      tag: "Tierra Física y Pararrayos",
+      icon: <ShieldCheck className="w-6 h-6" />
     }
   ];
 
@@ -1249,6 +1260,217 @@ const ImpactSection = () => (
   </section>
 );
 
+const AdvancedLightningMap = () => {
+  const [radarTime, setRadarTime] = useState<number | null>(null);
+  const [radarPath, setRadarPath] = useState<string | null>(null);
+  const [strikes, setStrikes] = useState<{ id: number; lat: number; lng: number; points: [number, number][] }[]>([]);
+  const borderControls = useAnimation();
+
+  // Fetch RainViewer data
+  useEffect(() => {
+    const fetchRadarData = async () => {
+      try {
+        const response = await fetch('https://api.rainviewer.com/public/weather-maps.json');
+        const data = await response.json();
+        if (data.radar && data.radar.past.length > 0) {
+          const latest = data.radar.past[data.radar.past.length - 1];
+          setRadarTime(latest.time);
+          setRadarPath(latest.path);
+        }
+      } catch (error) {
+        console.error('Error fetching RainViewer data:', error);
+      }
+    };
+
+    fetchRadarData();
+    const interval = setInterval(fetchRadarData, 120000); // Update every 2 minutes
+    return () => clearInterval(interval);
+  }, []);
+
+  // Lightning Simulation Engine
+  useEffect(() => {
+    const triggerStrike = async () => {
+      // Random coordinates within Mexico bounds (approx)
+      const lat = 14 + Math.random() * 18;
+      const lng = -118 + Math.random() * 32;
+      
+      // Generate jagged points for the bolt
+      const points: [number, number][] = [
+        [lat + 1.2, lng + (Math.random() - 0.5) * 0.6],
+        [lat + 0.8, lng + (Math.random() - 0.5) * 0.4],
+        [lat + 0.4, lng + (Math.random() - 0.5) * 0.2],
+        [lat, lng]
+      ];
+
+      const id = Date.now();
+      setStrikes(prev => [...prev, { id, lat, lng, points }]);
+      
+      // Border flash effect
+      borderControls.start({
+        borderColor: ['rgba(255,255,255,0.05)', '#ED7824', 'rgba(255,255,255,0.05)'],
+        boxShadow: [
+          '0 0 50px rgba(0,0,0,0.5)', 
+          '0 0 70px rgba(237,120,36,0.4)', 
+          '0 0 50px rgba(0,0,0,0.5)'
+        ],
+        transition: { duration: 0.4 }
+      });
+
+      // Remove strike after animation
+      setTimeout(() => {
+        setStrikes(prev => prev.filter(s => s.id !== id));
+      }, 800);
+    };
+
+    const interval = setInterval(() => {
+      if (Math.random() > 0.7) { // 30% chance every second
+        triggerStrike();
+      }
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [borderControls]);
+
+  return (
+    <section className="py-24 bg-industrial-dark overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/10 text-brand-orange text-sm font-bold mb-4"
+          >
+            <Zap className="w-4 h-4" /> MONITOREO AVANZADO
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">
+            Radar de Tormentas <span className="text-brand-orange">S3S México</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Monitorea tormentas en tiempo real y protege tu operación antes de que ocurra una falla.
+          </p>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          animate={borderControls}
+          viewport={{ once: true }}
+          className="relative rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border-4 border-white/5 aspect-video md:aspect-[21/9] bg-black"
+        >
+          <MapContainer 
+            center={[23.6345, -102.5528]} 
+            zoom={5} 
+            style={{ height: '100%', width: '100%' }}
+            zoomControl={false}
+            attributionControl={false}
+          >
+            {/* CartoDB Dark Matter Base Layer */}
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              subdomains="abcd"
+            />
+
+            {/* RainViewer Radar Layer */}
+            {radarPath && (
+              <TileLayer
+                url={`https://tilecache.rainviewer.com${radarPath}/256/{z}/{x}/{y}/2/1_1.png`}
+                opacity={0.6}
+                zIndex={10}
+              />
+            )}
+
+            {/* Simulated Lightning Bolts */}
+            {strikes.map(strike => (
+              <React.Fragment key={strike.id}>
+                {/* The Bolt Line */}
+                <Polyline 
+                  positions={strike.points}
+                  pathOptions={{ 
+                    color: '#fff', 
+                    weight: 3, 
+                    opacity: 0.9,
+                    lineCap: 'round',
+                    lineJoin: 'round',
+                    dashArray: '1, 0'
+                  }}
+                />
+                {/* Impact Glow */}
+                <Circle 
+                  center={[strike.lat, strike.lng]}
+                  radius={40000}
+                  pathOptions={{ 
+                    color: '#fff', 
+                    fillColor: '#fff', 
+                    fillOpacity: 0.9,
+                    weight: 2
+                  }}
+                />
+                <Circle 
+                  center={[strike.lat, strike.lng]}
+                  radius={120000}
+                  pathOptions={{ 
+                    color: '#ED7824', 
+                    fillColor: '#ED7824', 
+                    fillOpacity: 0.3,
+                    weight: 0
+                  }}
+                />
+              </React.Fragment>
+            ))}
+          </MapContainer>
+
+          {/* Map UI Overlays */}
+          <div className="absolute top-6 left-6 z-[50] flex flex-col gap-2">
+            <div className="bg-black/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-xs font-bold text-white uppercase tracking-widest">Radar en Vivo</span>
+            </div>
+            {radarTime && (
+              <div className="bg-black/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Última Actualización</span>
+                <span className="text-xs font-mono text-brand-orange">
+                  {new Date(radarTime * 1000).toLocaleTimeString()}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="absolute bottom-6 right-6 z-[50] flex flex-col gap-2 items-end">
+            <div className="bg-black/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              CartoDB Dark Matter + RainViewer API
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 mt-12">
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <div className="w-12 h-12 rounded-xl bg-brand-orange/20 flex items-center justify-center mb-4">
+              <Zap className="w-6 h-6 text-brand-orange" />
+            </div>
+            <h4 className="font-bold text-white mb-2">Detección de Rayos en Tiempo Real</h4>
+            <p className="text-sm text-gray-400">Anticipa descargas eléctricas y reduce riesgos en tu operación con monitoreo preciso basado en patrones de tormenta.</p>
+          </div>
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
+              <Globe className="w-6 h-6 text-blue-400" />
+            </div>
+            <h4 className="font-bold text-white mb-2">Radar de Precipitación (via <a href="https://www.rainviewer.com/" target="_blank" rel="noopener noreferrer" className="text-brand-orange hover:underline">RainViewer</a>)</h4>
+            <p className="text-sm text-gray-400">Visualiza tormentas con actualizaciones cada 2 minutos y toma decisiones antes de que el clima impacte tu infraestructura.</p>
+          </div>
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
+              <ShieldCheck className="w-6 h-6 text-purple-400" />
+            </div>
+            <h4 className="font-bold text-white mb-2">Análisis de Riesgo Eléctrico</h4>
+            <p className="text-sm text-gray-400">Identifica zonas vulnerables y protege tus sistemas con estrategias diseñadas para evitar fallas y pérdidas operativas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const LandingPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1259,6 +1481,7 @@ const LandingPage = () => {
       <Hero />
       <ProblemSection />
       <SolutionsSection />
+      <AdvancedLightningMap />
       <ImpactSection />
       <SectorsSection />
       <IsoCertificationSection />
